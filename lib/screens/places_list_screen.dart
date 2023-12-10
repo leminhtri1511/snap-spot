@@ -17,7 +17,8 @@ class PlacesListScreen extends ConsumerWidget {
         title: const Text('Your places'),
         actions: [
           IconButton(
-            onPressed: () => Navigator.push(
+            onPressed: () => 
+            Navigator.push(
               context,
               CupertinoPageRoute(
                 builder: (context) => const AddPlaceScreen(),
@@ -27,8 +28,14 @@ class PlacesListScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: PlacesList(
-        places: userPlaces,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 15.0,
+          horizontal: 5,
+        ),
+        child: PlacesList(
+          places: userPlaces,
+        ),
       ),
     );
   }

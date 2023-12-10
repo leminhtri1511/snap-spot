@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:snap_spot/models/place.dart';
 import 'package:snap_spot/screens/place_detail_screen.dart';
@@ -25,21 +27,27 @@ class PlacesList extends StatelessWidget {
     }
     return ListView.builder(
       itemCount: places?.length,
-      itemBuilder: (context, index) => ListTile(
-        title: Text(
-          places![index].title,
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium!
-              .copyWith(color: Theme.of(context).colorScheme.onBackground),
+      itemBuilder: (context, index) => Card(
+        child: ListTile(
+          leading:  CircleAvatar(
+            radius: 25,
+            backgroundImage: FileImage(places![index].image),
+          ),
+          title: Text(
+            places![index].title,
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: Theme.of(context).colorScheme.onBackground),
+          ),
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => PlaceDetailScreen(
+                place: places![index],
+              ),
+            ));
+          },
         ),
-        onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => PlaceDetailScreen(
-              place: places![index],
-            ),
-          ));
-        },
       ),
     );
   }
