@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
-import 'package:snap_spot/models/place_location.dart';
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();

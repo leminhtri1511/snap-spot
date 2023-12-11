@@ -1,9 +1,13 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:snap_spot/providers/user_places.dart';
-import 'package:snap_spot/screens/add_place_screen.dart';
-import 'package:snap_spot/widgets/places_list.dart';
+import 'package:snap_spot/src/configs/widget/text/paragraph.dart';
+
+import '../../providers/user_places.dart';
+
+import '../add_place/add_place_screen.dart';
+import 'components/places_list.dart';
 
 class PlacesListScreen extends ConsumerStatefulWidget {
   const PlacesListScreen({super.key});
@@ -22,25 +26,25 @@ class _PlacesListScreen extends ConsumerState<PlacesListScreen> {
     super.initState();
     placesFuture = ref.read(userPlacesProvider.notifier).fetchSavedPlaces();
   }
+
   @override
   Widget build(BuildContext context) {
     final userPlaces = ref.watch(userPlacesProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Your places'),
-        actions: [
-          IconButton(
-            onPressed: () => Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => const AddPlaceScreen(),
-              ),
-            ),
-            icon: const Icon(Icons.add),
+      appBar: AppBar(title: const Paragraph(content: 'Your places')
+          // actions: [
+          //   IconButton(
+          //     onPressed: () => Navigator.push(
+          //       context,
+          //       CupertinoPageRoute(
+          //         builder: (context) => const AddPlaceScreen(),
+          //       ),
+          //     ),
+          //     icon: const Icon(Icons.add),
+          //   ),
+          // ],
           ),
-        ],
-      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: 15.0,
@@ -48,12 +52,25 @@ class _PlacesListScreen extends ConsumerState<PlacesListScreen> {
         ),
         child: FutureBuilder(
           future: placesFuture,
-          builder: (context, snapshot) => 
+          builder: (context, snapshot) =>
               snapshot.connectionState == ConnectionState.waiting
                   ? const Center(child: CircularProgressIndicator())
                   : PlacesList(
                       places: userPlaces,
                     ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.onBackground,
+        onPressed: () => Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => const AddPlaceScreen(),
+          ),
+        ),
+        child: const Icon(
+          Icons.add,
+          color: Colors.black,
         ),
       ),
     );

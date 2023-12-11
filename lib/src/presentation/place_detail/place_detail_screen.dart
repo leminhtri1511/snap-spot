@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:snap_spot/models/place.dart';
-import 'package:snap_spot/screens/map_screen.dart';
+
+import '../../models/place.dart';
+import '../map/map_screen.dart';
 
 class PlaceDetailScreen extends StatelessWidget {
   const PlaceDetailScreen({required this.place, super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:snap_spot/models/place_location.dart';
+import 'package:snap_spot/src/models/place_location.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({

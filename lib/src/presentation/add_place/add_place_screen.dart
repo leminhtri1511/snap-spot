@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:snap_spot/models/place_location.dart';
-import 'package:snap_spot/providers/user_places.dart';
-import 'package:snap_spot/widgets/image_input.dart';
-import 'package:snap_spot/widgets/location_input.dart';
+
+import '../../models/place_location.dart';
+import '../../providers/user_places.dart';
+import 'components/image_input.dart';
+import 'components/location_input.dart';
+
 
 class AddPlaceScreen extends ConsumerStatefulWidget {
   const AddPlaceScreen({super.key});

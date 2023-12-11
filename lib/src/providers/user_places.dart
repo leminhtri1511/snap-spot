@@ -1,12 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:snap_spot/models/place.dart';
-import 'package:snap_spot/models/place_location.dart';
+
 import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite/sqlite_api.dart';
+
+import '../models/place.dart';
 
 Future<Database> getDataBase() async {
   final dbPath = await sql.getDatabasesPath();
@@ -71,6 +72,17 @@ class UserPlaces extends StateNotifier<List<Place>> {
     });
 
     state = [newPlace, ...state];
+  }
+
+   Future<void> deletePlace(String placeId) async {
+    final db = await getDataBase();
+    await db.delete(
+      'user_places',
+      where: 'id = ?',
+      whereArgs: [placeId],
+    );
+
+    state = state.where((place) => place.id != placeId).toList();
   }
 }
 
