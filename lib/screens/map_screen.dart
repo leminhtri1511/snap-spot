@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:snap_spot/models/place_location.dart';
@@ -22,6 +21,8 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  LatLng? pickedLocation;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,12 +32,21 @@ class _MapScreenState extends State<MapScreen> {
         actions: [
           if (widget.isSelecting)
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop(pickedLocation);
+              },
               icon: const Icon(Icons.save),
             ),
         ],
       ),
       body: GoogleMap(
+        onTap: !widget.isSelecting
+            ? null
+            : (position) {
+                setState(() {
+                  pickedLocation = position;
+                });
+              },
         initialCameraPosition: CameraPosition(
           target: LatLng(
             widget.location.latitude,
@@ -44,15 +54,18 @@ class _MapScreenState extends State<MapScreen> {
           ),
           zoom: 16,
         ),
-        markers: {
-          Marker(
-            markerId: const MarkerId('m1'),
-            position: LatLng(
-              widget.location.latitude,
-              widget.location.longitude,
-            ),
-          ),
-        },
+        markers: (pickedLocation == null && widget.isSelecting)
+            ? {}
+            : {
+                Marker(
+                  markerId: const MarkerId('m1'),
+                  position: pickedLocation ??
+                      LatLng(
+                        widget.location.latitude,
+                        widget.location.longitude,
+                      ),
+                ),
+              },
       ),
     );
   }
